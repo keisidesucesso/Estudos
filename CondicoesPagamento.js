@@ -6,31 +6,36 @@ Código Condição de pagamento:
 2 - À vista no Dinheiro ou PIX, recebe 15% de desconto;
 3 - Em duas vezes, preço normal de etiqueta sem juros;
 4 - Acima de duas vezes, preço normal de etiqueta mais juros de 10%;*/
+
+function aplicarDesconto(valor, desconto) {
+  return valor - valor * (desconto / 100);
+}
+function aplicarJuros(valor, juros) {
+  return valor + valor * (juros / 100);
+}
+function aplicarFormaPagamento(formaPagamento, precoProduto) {
+  if (formaPagamento == 1) {
+    return aplicarDesconto(precoProduto, 10);
+  } else if (formaPagamento == 2) {
+    return aplicarDesconto(precoProduto, 15);
+  } else if (formaPagamento == 3) {
+    return precoProduto;
+  } else {
+    return aplicarJuros(precoProduto, 10);
+  }
+}
 const prompt = require('prompt-sync')({ sigint: true });
 
 const precoProduto = parseFloat(prompt('digite o preço do produto: '));
-const formaPagamento = prompt(
-  'Escolha uma forma de pagamento:\n 1 - À vista Débito, recebe 10% de desconto; \n 2 - À vista no Dinheiro ou PIX, recebe 15% de desconto; \n 3 - Em duas vezes, preço normal de etiqueta sem juros; \n 4 - Acima de duas vezes, preço normal de etiqueta mais juros de 10%;'
+const formaPagamento = parseInt(
+  prompt(
+    'Escolha uma forma de pagamento:\n 1 - À vista Débito, recebe 10% de desconto; \n 2 - À vista no Dinheiro ou PIX, recebe 15% de desconto; \n 3 - Em duas vezes, preço normal de etiqueta sem juros; \n 4 - Acima de duas vezes, preço normal de etiqueta mais juros de 10%;'
+  )
 );
-let desconto;
-let valorFinal;
-
-if (formaPagamento == 1) {
-  desconto = precoProduto * 0.1;
-  valorFinal = precoProduto - desconto;
-} else if (formaPagamento == 2) {
-  desconto = precoProduto * 0.15;
-  valorFinal = precoProduto - desconto;
-} else if (formaPagamento == 3) {
-  valorFinal = precoProduto;
-} else {
-  desconto = precoProduto * 0.1;
-  valorFinal = precoProduto + desconto;
-}
 
 console.log(
   'O valor final é R$',
-  valorFinal,
+  aplicarFormaPagamento(formaPagamento, precoProduto),
   'com a forma de pagamento ',
   formaPagamento
 );

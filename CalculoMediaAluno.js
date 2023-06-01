@@ -11,17 +11,24 @@ Classificação:
 
 const prompt = require('prompt-sync')({ sigint: true });
 
-const nota1 = parseInt(prompt('Digite a nota 1: '));
-const nota2 = parseInt(prompt('Digite a nota 2: '));
-const nota3 = parseInt(prompt('Digite a nota 3: '));
-
-const media = (nota1 + nota2 + nota3) / 3;
-console.log(media);
-
-if (media < 5) {
-  console.log('Aluno Reprovado com: ', media);
-} else if (media > 7) {
-  console.log('Aluno Aprovado com: ', media);
-} else {
-  console.log('Aluno em recuperação com: ', media);
+function calculaMedia(nota1, nota2, nota3) {
+  const media = (nota1 + nota2 + nota3) / 3;
+  return media;
 }
+
+function classificaNota(media) {
+  if (media < 5) {
+    return 'Aluno Reprovado com: ' + media;
+  } else if (media > 7) {
+    return 'Aluno Aprovado com: ' + media;
+  } else {
+    return 'Aluno em recuperação com: ' + media;
+  }
+}
+
+(function () {
+  const nota1 = parseInt(prompt('Digite a nota 1: '));
+  const nota2 = parseInt(prompt('Digite a nota 2: '));
+  const nota3 = parseInt(prompt('Digite a nota 3: '));
+  console.log(classificaNota(calculaMedia(nota1, nota2, nota3)));
+})();
